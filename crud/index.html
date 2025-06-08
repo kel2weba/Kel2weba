@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Kendaraan</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="header">
+        <h1><i class="fas fa-car"></i> Sistem Manajemen Kendaraan</h1>
+        <p>Kelola inventori kendaraan dengan mudah dan efisien</p>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-car"></i>
+            </div>
+            <div class="stat-number" id="totalVehicles">8</div>
+            <div class="stat-label">Total Kendaraan</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-number" id="availableVehicles">5</div>
+            <div class="stat-label">Tersedia</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <div class="stat-number" id="soldVehicles">2</div>
+            <div class="stat-label">Terjual</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <div class="stat-number" id="maintenanceVehicles">1</div>
+            <div class="stat-label">Maintenance</div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Cari berdasarkan merk, model, atau plat nomor...">
+                <i class="fas fa-search search-icon" onclick="searchVehicles()"></i>
+            </div>
+            <select class="filter-select" id="statusFilter" onchange="filterByStatus()">
+                <option value="">Semua Status</option>
+                <option value="available">Tersedia</option>
+                <option value="sold">Terjual</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="reserved">Reservasi</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" onclick="openAddModal()">
+            <i class="fas fa-plus"></i> Tambah Kendaraan
+        </button>
+    </div>
+
+    <!-- Alert Container -->
+    <div id="alertContainer"></div>
+
+    <!-- Vehicles Grid -->
+    <div id="vehiclesContainer">
+        <div class="vehicles-grid" id="vehiclesGrid">
+            <!-- Vehicle cards will be populated by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add/Edit Vehicle -->
+<div id="vehicleModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">Tambah Kendaraan Baru</h2>
+        <form id="vehicleForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="brand">Merk *</label>
+                    <input type="text" id="brand" name="brand" required>
+                </div>
+                <div class="form-group">
+                    <label for="model">Model *</label>
+                    <input type="text" id="model" name="model" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="year">Tahun *</label>
+                    <input type="number" id="year" name="year" min="1900" max="2030" required>
+                </div>
+                <div class="form-group">
+                    <label for="color">Warna</label>
+                    <input type="text" id="color" name="color">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="license_plate">Plat Nomor *</label>
+                <input type="text" id="license_plate" name="license_plate" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="engine_type">Tipe Mesin</label>
+                    <input type="text" id="engine_type" name="engine_type">
+                </div>
+                <div class="form-group">
+                    <label for="fuel_type">Jenis Bahan Bakar</label>
+                    <select id="fuel_type" name="fuel_type">
+                        <option value="gasoline">Bensin</option>
+                        <option value="diesel">Diesel</option>
+                        <option value="electric">Listrik</option>
+                        <option value="hybrid">Hybrid</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="price">Harga (Rp)</label>
+                    <input type="number" id="price" name="price" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status">
+                        <option value="available">Tersedia</option>
+                        <option value="sold">Terjual</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="reserved">Reservasi</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()" style="margin-right: 15px; background: #6c757d;">Batal</button>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aroma Kafe - Tempat Berkumpul yang Sempurna</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.7s forwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.9s forwards;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 50px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav.scrolled a {
+            color: #333;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .menu-item .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e74c3c;
+            float: right;
+        }
+
+        .menu-item p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* About Section */
+        .about {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .about-image {
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-item .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 10px;
+            line-height: 50px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .section { padding: 50px 20px; }
+            nav { padding: 15px 20px; }
+            nav ul { gap: 15px; }
+            .about-content { grid-template-columns: 1fr; }
+            .section h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+<nav id="navbar">
+    <ul>
+        <li><a href="#home">Beranda</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#about">Tentang</a></li>
+        <li><a href="#contact">Kontak</a></li>
+    </ul>
+</nav>
+
+<section id="home" class="hero">
+    <div class="hero-content">
+        <h1>Aroma Kafe</h1>
+        <p>Rasakan kehangatan dalam setiap tegukan</p>
+        <a href="#menu" class="cta-button">Lihat Menu</a>
+    </div>
+</section>
+
+<section id="menu" class="section">
+    <h2>Menu Spesial</h2>
+    <div class="menu-grid">
+        <div class="menu-item">
+            <h3>Espresso Signature <span class="price">Rp 25.000</span></h3>
+            <p>Kopi espresso premium dengan aroma yang kuat dan rasa yang mendalam. Disajikan dengan teknik brewing terbaik.</p>
+        </div>
+        <div class="menu-item">
+            <h3>Cappuccino Deluxe <span class="price">Rp 35.000</span></h3>
+            <p>Perpaduan sempurna antara espresso, steamed milk, dan foam. Dilengkapi dengan latte art yang indah.</p>
+        </div>
+        <div class="menu-item">
+            <h3>Croissant Butter <span class="price">Rp 18.000</span></h3>
+            <p>Croissant segar dengan tekstur renyah di luar dan lembut di dalam. Disajikan hangat dengan mentega premium.</p>
+        </div>
+        <div class="menu-item">
+            <h3>Tiramisu House <span class="price">Rp 28.000</span></h3>
+            <p>Dessert klasik Italia dengan lapisan krim mascarpone dan kopi yang lembut. Resep rahasia keluarga.</p>
+        </div>
+        <div class="menu-item">
+            <h3>Green Tea Latte <span class="price">Rp 30.000</span></h3>
+            <p>Minuman sehat dengan matcha premium dari Jepang. Kaya antioksidan dan rasa yang menyegarkan.</p>
+        </div>
+        <div class="menu-item">
+            <h3>Sandwich Club <span class="price">Rp 42.000</span></h3>
+            <p>Sandwich berlapis dengan ayam asap, keju, sayuran segar, dan saus special. Porsi yang mengenyangkan.</p>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="section about">
+    <h2>Tentang Kami</h2>
+    <div class="about-content">
+        <div class="about-text">
+            <p>Aroma Kafe hadir untuk memberikan pengalaman kopi terbaik di tengah hiruk pikuk kota. Kami percaya bahwa secangkir kopi yang sempurna dapat mengubah hari Anda menjadi lebih baik.</p>
+
+            <p>Dengan biji kopi pilihan yang dipanggang secara tradisional dan barista berpengalaman, kami menyajikan cita rasa otentik dalam setiap cangkir. Suasana hangat dan nyaman di kafe kami menjadi tempat ideal untuk bekerja, bertemu teman, atau sekadar menikmati waktu sendiri.</p>
+
+            <p>Bergabunglah dengan komunitas pecinta kopi di Aroma Kafe, tempat setiap cerita dimulai dengan aroma yang memikat.</p>
+        </div>
+        <div class="about-image">
+            ☕ Kafe Kami
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="section">
+    <h2>Kunjungi Kami</h2>
+    <div class="contact-grid">
+        <div class="contact-item">
+            <div class="icon">📍</div>
+            <h3>Lokasi</h3>
+            <p>Jl. Sudirman No. 123<br>Jakarta Pusat, 10220</p>
+        </div>
+        <div class="contact-item">
+            <div class="icon">⏰</div>
+            <h3>Jam Buka</h3>
+            <p>Senin - Jumat: 07:00 - 22:00<br>Sabtu - Minggu: 08:00 - 23:00</p>
+        </div>
+        <div class="contact-item">
+            <div class="icon">📞</div>
+            <h3>Kontak</h3>
+            <p>Telepon: (021) 1234-5678<br>Email: info@aromakafe.com</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2025 Aroma Kafe. Semua hak dilindungi undang-undang.</p>
+    <div class="social-links">
+        <a href="#">📘</a>
+        <a href="#">📷</a>
+        <a href="#">🐦</a>
+    </div>
+</footer>
+
+<script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe all menu items and contact items
+    document.querySelectorAll('.menu-item, .contact-item').forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px)';
+        item.style.transition = 'all 0.6s ease';
+        observer.observe(item);
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        const heroBackground = document.querySelector('.hero::before');
+        if (heroBackground) {
+            document.querySelector('.hero').style.transform = `translateY(${rate}px)`;
+        }
+    });
+</script>
+</body>
+</html>
